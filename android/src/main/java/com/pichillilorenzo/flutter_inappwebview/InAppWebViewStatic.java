@@ -39,6 +39,10 @@ public class InAppWebViewStatic extends ChannelDelegateImpl {
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull final MethodChannel.Result result) {
     switch (call.method) {
+      case "init":
+        this.plugin.delayInit();
+        result.success(true);
+        break;
       case "getDefaultUserAgent":
         result.success(WebSettings.getDefaultUserAgent(plugin.applicationContext));
         break;

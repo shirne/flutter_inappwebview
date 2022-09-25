@@ -2,6 +2,8 @@ import 'dart:collection';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:flutter/services.dart';
+
 import '../find_interaction/find_interaction_controller.dart';
 import '../pull_to_refresh/pull_to_refresh_controller.dart';
 
@@ -9,6 +11,7 @@ import '../context_menu.dart';
 import '../types/main.dart';
 
 import '../web_uri.dart';
+import '_static_channel.dart';
 import 'in_app_webview_controller.dart';
 import 'in_app_webview_settings.dart';
 import 'headless_in_app_webview.dart';
@@ -20,15 +23,7 @@ import '../debug_logging_settings.dart';
 
 ///Abstract class that represents a WebView. Used by [InAppWebView], [HeadlessInAppWebView] and the WebView of [InAppBrowser].
 abstract class WebView {
-  ///Debug settings used by [InAppWebView], [HeadlessInAppWebView] and [InAppBrowser].
-  ///The default value excludes the [WebView.onScrollChanged], [WebView.onOverScrolled] and [WebView.onReceivedIcon] events.
-  static DebugLoggingSettings debugLoggingSettings = DebugLoggingSettings(
-      maxLogMessageLength: 1000,
-      excludeFilter: [
-        RegExp(r"onScrollChanged"),
-        RegExp(r"onOverScrolled"),
-        RegExp(r"onReceivedIcon")
-      ]);
+  static MethodChannel _staticChannel = IN_APP_WEBVIEW_STATIC_CHANNEL;
 
   ///The window id of a [CreateWindowAction.windowId].
   final int? windowId;
@@ -1174,4 +1169,8 @@ abstract class WebView {
       this.pullToRefreshController,
       this.findInteractionController,
       this.implementation = WebViewImplementation.NATIVE});
+
+  static Future<bool?> init() {
+    return _staticChannel.invokeMethod('init');
+  }
 }
