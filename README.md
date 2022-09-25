@@ -26,6 +26,19 @@ A Flutter plugin that allows you to add an inline webview, to use an headless we
 ## New Version 6.x.x is OUT NOW!
 
 Migrating from version `5.x.x` is easy! Follow the online [Migration guide](https://inappwebview.dev/docs/migration-guide).
+## Fix for [#1304](https://github.com/pichillilorenzo/flutter_inappwebview/issues/1304)
+
+```yaml
+flutter_inappwebview: 
+    git: 
+      url: https://github.com/shirne/flutter_inappwebview
+      ref: fix_init
+```
+after check agreement
+```dart
+await WebView.init();
+```
+
 
 ## Articles/Resources
 
