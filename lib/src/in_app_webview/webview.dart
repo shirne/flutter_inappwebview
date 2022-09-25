@@ -1,7 +1,9 @@
 import 'dart:collection';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import '../find_interaction/find_interaction_controller.dart';
@@ -1171,6 +1173,9 @@ abstract class WebView {
       this.implementation = WebViewImplementation.NATIVE});
 
   static Future<bool?> init() {
-    return _staticChannel.invokeMethod('init');
+    if (!kIsWeb && Platform.isAndroid) {
+      return _staticChannel.invokeMethod('init');
+    }
+    return Future.value(true);
   }
 }
