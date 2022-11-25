@@ -27,6 +27,16 @@ import '../debug_logging_settings.dart';
 abstract class WebView {
   static MethodChannel _staticChannel = IN_APP_WEBVIEW_STATIC_CHANNEL;
 
+  ///Debug settings used by [InAppWebView], [HeadlessInAppWebView] and [InAppBrowser].
+  ///The default value excludes the [WebView.onScrollChanged], [WebView.onOverScrolled] and [WebView.onReceivedIcon] events.
+  static DebugLoggingSettings debugLoggingSettings = DebugLoggingSettings(
+      maxLogMessageLength: 1000,
+      excludeFilter: [
+        RegExp(r"onScrollChanged"),
+        RegExp(r"onOverScrolled"),
+        RegExp(r"onReceivedIcon")
+      ]);
+
   ///The window id of a [CreateWindowAction.windowId].
   final int? windowId;
 
